@@ -9,6 +9,8 @@ In this repository you will find an example for a Flutter app, the app is able t
 - Load a JSON of images from Flickr with pagination (requires a key of your own).
 - Scan QR code with camera.
 - Example of Flare animations usage.
+- Splash screen usage (using a custom bridge)
+- Simple animations
 
 Enjoy!
 Perry
