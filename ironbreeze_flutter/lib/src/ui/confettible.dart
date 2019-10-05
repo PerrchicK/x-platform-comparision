@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ironbreeze/src/communication/local_broadcast.dart';
 import 'package:ironbreeze/src/util/animations.dart';
-import 'package:ironbreeze/src/util/app_observer.dart';
 import 'package:ironbreeze/src/util/utils.dart';
 
 /// This is an experimental attempt to make a confetti widget that wraps other widgets.

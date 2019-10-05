@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:ironbreeze/src/communication/local_broadcast.dart';
 import 'package:ironbreeze/src/util/app_logger.dart';
-import 'package:ironbreeze/src/util/app_observer.dart';
 
 class ObservingWidget extends StatefulWidget {
   final Iterable<String> observedKeys;

@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:ironbreeze/src/bl/location_helper.dart';
 import 'package:ironbreeze/src/bl/models/coordinates.dart';
+import 'package:ironbreeze/src/communication/local_broadcast.dart';
 import 'package:ironbreeze/src/dl/data_manager.dart';
 import 'package:ironbreeze/src/util/app_logger.dart';
-import 'package:ironbreeze/src/util/app_observer.dart';
 import 'package:ironbreeze/src/util/utils.dart';
 
 /// Inspired from: https://flutter.io/docs/development/platform-integration/platform-channels
