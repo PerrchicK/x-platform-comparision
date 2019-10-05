@@ -30,6 +30,8 @@ dependencies:
 #  firebase_database: 3.0.5
 #  cloud_firestore: 0.12.9
 
+  rxdart: ^0.18.0 # // Needed when studied from: https://medium.com/flutterpub/architecting-your-flutter-project-bd04e144a8f1
+
   url_launcher: 5.1.2
   flutter_svg: 0.13.0+2
 
