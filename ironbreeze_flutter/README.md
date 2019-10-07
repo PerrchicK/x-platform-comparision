@@ -1,6 +1,6 @@
 # ironbreeze
 
-A new Flutter project.
+A Flutter project that originally was presented in a [meetup](https://www.meetup.com/full-stack-developer-il/events/264154120/) hosted in ironSource, where we compared the big 3 cross-platform frameworks in 2019.
 
 ## Getting Started
 
