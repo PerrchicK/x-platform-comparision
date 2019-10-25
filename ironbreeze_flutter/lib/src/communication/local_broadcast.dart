@@ -1,6 +1,8 @@
 import 'package:ironbreeze/src/util/app_logger.dart';
 //import 'package:logging/logging.dart';
 
+typedef EventCallback = Function(String eventName, dynamic data);
+
 class AppObserver {
   static const String Key_FAVORITE_SELECTED = "FAVORITE_SELECTED";
   static const String Key_ON_ADD_NEW_FAVORITE = "ON_ADD_NEW_FAVORITE";
@@ -49,11 +51,14 @@ class AppObserver {
   static const String Key_NATIVE_USE_CURRENT_LOCATION =
       "NATIVE_USE_CURRENT_LOCATION";
 
-  String _eventName;
-  String get eventName => _eventName;
-  bool isEnabled;
+  factory AppObserver({Iterable<String> events, EventCallback onEvent}) {
+    return LocalBroadcast.observe(events: events, onEvent: onEvent);
+  }
 
-  Function(String eventName, dynamic data) _onEvent;
+  Iterable<String> _events;
+  Iterable<String> get eventNames => _events.toList();
+  bool isEnabled;
+  EventCallback _onEvent;
 
   // Private constructor
   AppObserver._internal() {
@@ -62,7 +67,9 @@ class AppObserver {
 
   void remove() {
     isEnabled = false;
-    LocalBroadcast._observers[eventName].remove(this);
+    _events.forEach((eventName) {
+      LocalBroadcast._observers[eventName]?.remove(this);
+    });
   }
 }
 
@@ -72,22 +79,23 @@ class LocalBroadcast {
   static const String Key_ThrowConfetti = "ThrowConfetti";
   static const String Key_ImagesListUpdated = "ImagesListUpdated";
 
-  static AppObserver observe(
-      {String eventName, Function(String eventName, dynamic data) onEvent}) {
+  static AppObserver observe({Iterable<String> events, EventCallback onEvent}) {
     AppObserver observer = AppObserver._internal();
-    observer._eventName = eventName;
+    observer._events = (events ?? []).toSet();
     observer._onEvent = onEvent;
 
-    if (observer._eventName == null) {
-      AppLogger.error("this.eventName cannot be NULL!!");
+    if (observer._events.isEmpty) {
+      AppLogger.error("event names cannot be empty!!");
     } else {
-      List<AppObserver> observersList =
-          LocalBroadcast._observers[observer._eventName];
-      if (observersList == null) {
-        observersList = new List<AppObserver>();
-        LocalBroadcast._observers[eventName] = observersList;
-      }
-      LocalBroadcast._observers[eventName].add(observer);
+      observer._events.forEach((eventName) {
+        List<AppObserver> observersList = LocalBroadcast._observers[eventName];
+        if (observersList == null) {
+          observersList = new List<AppObserver>();
+          LocalBroadcast._observers[eventName] = observersList;
+        }
+
+        LocalBroadcast._observers[eventName].add(observer);
+      });
     }
 
     return observer;

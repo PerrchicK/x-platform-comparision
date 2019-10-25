@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:ironbreeze/src/communication/local_broadcast.dart';
 import 'package:ironbreeze/src/util/app_logger.dart';
-import 'package:ironbreeze/src/util/app_observer.dart';
 
 class ObservingWidget extends StatefulWidget {
   final Iterable<String> observedKeys;
@@ -37,7 +37,7 @@ class _ObservingWidgetState extends State<ObservingWidget> {
 
     if (widget.observedKeys != null) {
       _observer = LocalBroadcast.observe(
-          eventName: widget.observedKeys.first,
+          events: widget.observedKeys,
           onEvent: (name, data) {
             refresh(data);
           });

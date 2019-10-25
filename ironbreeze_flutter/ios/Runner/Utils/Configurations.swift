@@ -30,9 +30,9 @@ class Configurations {
         
         static let NoNoAnimation: String                = "noAnimation" // not using inferred on purpose, to help Swift compiler
         struct Persistency {
-            static let InUsePermissionRequestCounter: String = "InUsePermissionRequestCounter"
+            static let InUsePermissionRequestCounter: String  = "InUsePermissionRequestCounter"
             static let AlwaysPermissionRequestCounter: String = "AlwaysPermissionRequestCounter"
-            static let LastCrash: String                = "last crash"
+            static let LastCrash: String                      = "last crash"
         }
     }
 

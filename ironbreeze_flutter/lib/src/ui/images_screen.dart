@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ironbreeze/src/bl/models/image_data.dart';
 import 'package:ironbreeze/src/bl/strings.dart';
+import 'package:ironbreeze/src/communication/local_broadcast.dart';
 import 'package:ironbreeze/src/dl/data_manager.dart';
 import 'package:ironbreeze/src/ui/refreshable_widget.dart';
-import 'package:ironbreeze/src/util/app_observer.dart';
 import 'package:ironbreeze/src/util/throttler.dart';
 import 'package:ironbreeze/src/util/ui_factory.dart';
 import 'package:ironbreeze/src/util/utils.dart';
@@ -97,10 +97,6 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
             ),
           ],
         ),
-//        title: Hero(
-//          tag: Constants.ImagesHeroTag,
-//          child: _searchInputField,
-//        ),
       ),
       body: ObservingWidget(
         observedKey: LocalBroadcast.Key_ImagesListUpdated,
@@ -116,6 +112,19 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
           },
         ),
       ),
+//      body: ObserverWidget(
+//        eventName: LocalBroadcast.Key_ImagesListUpdated,
+//        builder: (context, data, error) => ListView.builder(
+//          padding: EdgeInsets.all(8.0),
+//          itemCount: items.length,
+//          controller: _scrollController,
+//          itemBuilder: (BuildContext context, int index) {
+//            return ImageCell(
+//              data: items[index],
+//            );
+//          },
+//        ),
+//      ),
     );
   }
 

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:ironbreeze/src/bl/models/image_data.dart';
 import 'package:ironbreeze/src/bl/parser.dart';
+import 'package:ironbreeze/src/communication/local_broadcast.dart';
 import 'package:ironbreeze/src/dl/images_provider.dart';
 import 'package:ironbreeze/src/util/app_logger.dart';
-import 'package:ironbreeze/src/util/app_observer.dart';
 import 'package:ironbreeze/src/util/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,11 +31,11 @@ class DataManager {
   static DataManager get shared => _singleton;
 
   factory DataManager() {
-    return _singleton;
+    return shared;
   }
 
   DataManager._internal() {
-    _isReady = false;
+    _imagesData = [];
   }
 
   List<ImageData> _imagesData;
