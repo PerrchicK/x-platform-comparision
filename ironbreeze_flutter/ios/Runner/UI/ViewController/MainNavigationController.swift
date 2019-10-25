@@ -56,11 +56,11 @@ class MainNavigationController: UINavigationController {
     
     func showLastCrashifExists() {
         if PerrFuncs.isRunningUnderDevelopmentEnvironment() {
-            if let lastCrashCallStack: [String] = UserDefaults.load(key: "last crash") {
+            if let lastCrashCallStack: [String] = UserDefaults.load(key: Configurations.Keys.Persistency.LastCrash) {
                 UIAlertController.makeAlert(title: "last crash", message: "\(lastCrashCallStack)")
                     .withAction(UIAlertAction(title: "fine", style: .cancel, handler: nil))
                     .withAction(UIAlertAction(title: "delete", style: .destructive, handler: { (alertAction) in
-                        UserDefaults.remove(key: "last crash").synchronize()
+                        UserDefaults.remove(key: Configurations.Keys.Persistency.LastCrash).synchronize()
                     }))
                     .show()
             }

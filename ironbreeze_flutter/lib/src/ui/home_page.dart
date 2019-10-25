@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     // Tip: In release mode, the UI is presented "too fast" and then the size values are zero: https://github.com/flutter/flutter/issues/25827
     if (!Utils.updateScreenSize(MediaQuery.of(context).size)) {
       // Show an empty screen, either way the app's meanwhile presenting a splash screen.
-      Future.delayed(Duration(milliseconds: 200), () {
+      Future.delayed(Duration(milliseconds: 180), () {
         refreshUi();
       });
       return Container(color: Colors.white);
@@ -54,57 +54,71 @@ class _HomePageState extends State<HomePage> {
         title: new Text(widget.title),
       ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: UiFactory.coinFlipAnimation(
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    child: GestureDetector(
-                      onTap: () {
-                        UiFactory.showInputDialog(
-                            alertTitle: Localized.string("How many coins?"),
-                            bodyText: Localized.string("Select coins count"),
-                            hint: Localized.string("1000?"),
-                            context: context,
-                            callback: (data) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AnimationsScreen(
-                                    count: int.tryParse(data),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: UiFactory.coinFlipAnimation(
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      child: GestureDetector(
+                        onTap: () {
+                          UiFactory.showInputDialog(
+                              alertTitle: Localized.string("How many coins?"),
+                              bodyText: Localized.string("Select coins count"),
+                              hint: Localized.string("1000?"),
+                              context: context,
+                              callback: (data) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AnimationsScreen(
+                                      count: int.tryParse(data),
+                                    ),
                                   ),
-                                ),
-                              );
-                            });
-                      },
-                      child: UiFactory.generateLogo(tintColorHexa: "fff"),
+                                );
+                              });
+                        },
+                        child: UiFactory.generateLogo(tintColorHexa: "fff"),
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xff3083ff),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xff3083ff),
-                    ),
+                    duration: Duration(milliseconds: 500),
                   ),
-                  duration: Duration(milliseconds: 500),
                 ),
-              ),
-              RoundButton(
-                size: 80,
-                title: Localized.string('Scan'),
-                onPressed: () async {
-                  var result = await Utils.scan();
-                  if (result == null) return;
+                RoundButton(
+                  size: 50,
+                  title: Localized.string("Test"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ComparisonScreen(),
+                      ),
+                    );
+                  },
+                ),
+                RoundButton(
+                  size: 80,
+                  title: Localized.string('Scan'),
+                  onPressed: () async {
+                    var result = await Utils.scan();
+                    if (result == null) return;
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ImageViewer(imageUrl: result),
-                    ),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImageViewer(imageUrl: result),
+                      ),
+                    );
 
 //                    Navigator.push(
 //                      context,
@@ -112,36 +126,37 @@ class _HomePageState extends State<HomePage> {
 //                        builder: (context) => ScannerScreen(),
 //                      ),
 //                    );
-                },
-              ),
-              Hero(
-                tag: Constants.ImagesHeroTag,
-                child: RoundButton(
-                  title: Strings.imagesListScreen,
-                  size: 150,
+                  },
+                ),
+                Hero(
+                  tag: Constants.ImagesHeroTag,
+                  child: RoundButton(
+                    title: Strings.imagesListScreen,
+                    size: 150,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImagesListScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                RoundButton(
+                  size: 200,
+                  title: Localized.string("Let's Compare"),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ImagesListScreen(),
+                        builder: (context) => ComparisonScreen(),
                       ),
                     );
                   },
                 ),
-              ),
-              RoundButton(
-                size: 200,
-                title: Localized.string("Let's Compare"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ComparisonScreen(),
-                    ),
-                  );
-                },
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

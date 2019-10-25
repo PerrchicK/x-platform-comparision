@@ -5,6 +5,7 @@ import CoreLocation
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
+
     var isFlutterReady: Bool = false {
         didSet {
             guard isFlutterReady else { return }
@@ -14,9 +15,13 @@ import CoreLocation
             }
         }
     }
+
+    var appStateForegroundObserver: NotificationObserver?
+    var appStateBackgroundObserver: NotificationObserver?
+
     lazy var flutterPendingMethods: [MethodCall] = []
     lazy var flutterViewController: FlutterViewController = FlutterViewController.instantiate();
-    lazy var methodChannel = FlutterMethodChannel(name: "main.ironbreeze/flutter_channel", binaryMessenger: flutterViewController)
+    lazy var methodChannel = FlutterMethodChannel(name: "main.ironbreeze/flutter_channel", binaryMessenger: flutterViewController.binaryMessenger)
     private(set) var isConnectedToTheInternet = true {
         didSet {
             if isConnectedToTheInternet {
@@ -42,8 +47,16 @@ import CoreLocation
 
         if PerrFuncs.isRunningUnderDevelopmentEnvironment() {
             NSSetUncaughtExceptionHandler { (exception) in
-                UserDefaults.save(value: exception.callStackSymbols, forKey: "last crash").synchronize()
+                UserDefaults.save(value: exception.callStackSymbols, forKey: Configurations.Keys.Persistency.LastCrash).synchronize()
             }
+        }
+        
+        appStateForegroundObserver = NotificationObserver.newObserverForNotificationWithName(name: UIApplication.didBecomeActiveNotification, object: nil) { [weak self] (notification) in
+            self?.callFlutter(methodName: "application_entered_foreground")
+        }
+        
+        appStateBackgroundObserver = NotificationObserver.newObserverForNotificationWithName(name: UIApplication.didEnterBackgroundNotification, object: nil) { [weak self] (notification) in
+            self?.callFlutter(methodName: "application_entered_background")
         }
 
         UNUserNotificationCenter.current().delegate = self
@@ -53,18 +66,6 @@ import CoreLocation
 
     override func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         super.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
-    }
-
-    override func applicationDidBecomeActive(_ application: UIApplication) {
-        super.applicationDidBecomeActive(application)
-
-        callFlutter(methodName: "application_entered_foreground")
-    }
-
-    override func applicationDidEnterBackground(_ application: UIApplication) {
-        super.applicationDidEnterBackground(application)
-
-        callFlutter(methodName: "application_entered_background")
     }
 
     // MARK: - Core Data stack

@@ -108,13 +108,13 @@ extension AppDelegate {
 extension FlutterViewController {
     static var FlutterMethodChannelName: String = "main.ironbreeze/flutter_channel"
     func observeMethodChannel(onFlutterCall: @escaping ((FlutterMethodCall, @escaping FlutterResult) -> Void)) {
-        let methodChannel = FlutterMethodChannel(name: FlutterViewController.FlutterMethodChannelName, binaryMessenger: self)
+        let methodChannel = FlutterMethodChannel(name: FlutterViewController.FlutterMethodChannelName, binaryMessenger: self.binaryMessenger)
         
         methodChannel.setMethodCallHandler(onFlutterCall)
     }
     
     func callFlutter(methodName: String, arguments: Any? = nil, callback: CallbackClosure<Any?>? = nil) {
-        let methodChannel = FlutterMethodChannel(name: FlutterViewController.FlutterMethodChannelName, binaryMessenger: self)
+        let methodChannel = FlutterMethodChannel(name: FlutterViewController.FlutterMethodChannelName, binaryMessenger: self.binaryMessenger)
         methodChannel.invokeMethod(methodName, arguments: arguments) { (callbackData) in
             📗(callbackData)
             callback?(callbackData)

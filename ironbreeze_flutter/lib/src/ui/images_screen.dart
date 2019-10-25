@@ -97,10 +97,6 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
             ),
           ],
         ),
-//        title: Hero(
-//          tag: Constants.ImagesHeroTag,
-//          child: _searchInputField,
-//        ),
       ),
       body: ObservingWidget(
         observedKey: LocalBroadcast.Key_ImagesListUpdated,
@@ -116,6 +112,19 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
           },
         ),
       ),
+//      body: ObserverWidget(
+//        eventName: LocalBroadcast.Key_ImagesListUpdated,
+//        builder: (context, data, error) => ListView.builder(
+//          padding: EdgeInsets.all(8.0),
+//          itemCount: items.length,
+//          controller: _scrollController,
+//          itemBuilder: (BuildContext context, int index) {
+//            return ImageCell(
+//              data: items[index],
+//            );
+//          },
+//        ),
+//      ),
     );
   }
 

@@ -30,7 +30,7 @@ class _ConfettibleState extends State<Confettible> {
 
     _children = [];
     _observer = LocalBroadcast.observe(
-        eventName: LocalBroadcast.Key_ThrowConfetti,
+        events: [LocalBroadcast.Key_ThrowConfetti],
         onEvent: (data, name) {
           _refreshUi();
         });

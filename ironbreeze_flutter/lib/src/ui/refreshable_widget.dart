@@ -37,7 +37,7 @@ class _ObservingWidgetState extends State<ObservingWidget> {
 
     if (widget.observedKeys != null) {
       _observer = LocalBroadcast.observe(
-          eventName: widget.observedKeys.first,
+          events: widget.observedKeys,
           onEvent: (name, data) {
             refresh(data);
           });

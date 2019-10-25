@@ -31,11 +31,11 @@ class DataManager {
   static DataManager get shared => _singleton;
 
   factory DataManager() {
-    return _singleton;
+    return shared;
   }
 
   DataManager._internal() {
-    _isReady = false;
+    _imagesData = [];
   }
 
   List<ImageData> _imagesData;
