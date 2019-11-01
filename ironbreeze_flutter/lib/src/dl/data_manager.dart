@@ -27,15 +27,12 @@ abstract class PersistenceKeys {
 class DataManager {
   /// Singleton instantiation, inspired from here: https://github.com/flutter/flutter/blob/b70d260b3c17b4b37e52504b980a146c423320fd/packages/flutter/lib/src/services/raw_keyboard.dart#L460
   static final DataManager _singleton = new DataManager._internal();
-
-  static DataManager get shared => _singleton;
-
-  factory DataManager() {
-    return shared;
-  }
-
+  static DataManager get _shared => _singleton;
   DataManager._internal() {
     _imagesData = [];
+  }
+  factory DataManager() {
+    return _shared;
   }
 
   List<ImageData> _imagesData;
@@ -49,12 +46,12 @@ class DataManager {
     if (_didShareTheApp != null) return;
 
     _didShareTheApp = true;
-    DataManager.shared
+    DataManager._shared
         .load<bool>(
       PersistenceKeys.DidShareTheApp,
     )
         .then((bool didShare) {
-      DataManager.shared.save<bool>(PersistenceKeys.DidShareTheApp, true);
+      DataManager._shared.save<bool>(PersistenceKeys.DidShareTheApp, true);
     });
   }
 

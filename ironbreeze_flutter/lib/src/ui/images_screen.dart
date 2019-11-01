@@ -24,16 +24,16 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
   FocusNode _searchInputTextFocusNode;
 
   ScrollController _scrollController;
+  DataManager get dataManager => DataManager();
 
   get _onSearchTextChanged => () {
         throttler.throttle(() async {
-          DataManager.shared.fetchImages(queryText: searchText);
+          dataManager.fetchImages(queryText: searchText);
         });
       };
 
   String get searchText => _searchInputText.text;
-  List<ImageData> get items =>
-      DataManager.shared.flickerImageItems[searchText] ?? [];
+  List<ImageData> get items => dataManager.flickerImageItems[searchText] ?? [];
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
 
     _searchInputField = TextField(
       onSubmitted: (String searchText) {
-        DataManager.shared.fetchImages(queryText: searchText);
+        dataManager.fetchImages(queryText: searchText);
       },
       textInputAction: TextInputAction.search,
       textAlign: TextAlign.start,
@@ -136,6 +136,6 @@ class _ImagesListScreenState extends State<ImagesListScreen> {
   }
 
   void _fetchMoreData() {
-    DataManager.shared.fetchImages(queryText: searchText);
+    dataManager.fetchImages(queryText: searchText);
   }
 }

@@ -7,6 +7,8 @@ import 'package:ironbreeze/src/util/utils.dart';
 import 'package:ironbreeze/src/util/widget_controller.dart';
 
 class ComparisonScreen extends StatelessWidget {
+  DataManager get dataManager => DataManager();
+
   @override
   Widget build(BuildContext context) {
     ControlledWidgetController controller = ControlledWidgetController();
@@ -71,7 +73,7 @@ class ComparisonScreen extends StatelessWidget {
 
     double sidesPadding = 20;
     double circularSliderSize = 80;
-    DataManager.shared.userPreferences.forEach(
+    dataManager.userPreferences.forEach(
       (preference, value) {
         rows.add(
           Padding(
@@ -93,7 +95,7 @@ class ComparisonScreen extends StatelessWidget {
                   height: circularSliderSize,
                   defaultValue: (value * 10.0).toInt(),
                   onChanged: (selectedValue) {
-                    DataManager.shared.userPreferences[preference] =
+                    dataManager.userPreferences[preference] =
                         selectedValue.toDouble() / 10;
                     controller.onChanged(selectedValue);
                   },
@@ -119,9 +121,9 @@ class ComparisonScreen extends StatelessWidget {
   }
 
   double _evaluate(Framework framework) {
-    var importanceValues = DataManager.shared.importance[framework.index];
+    var importanceValues = dataManager.importance[framework.index];
     List<double> values = [];
-    DataManager.shared.userPreferences.forEach((preference, value) {
+    dataManager.userPreferences.forEach((preference, value) {
       values.add(importanceValues[preference] * value / 10.0);
     });
 

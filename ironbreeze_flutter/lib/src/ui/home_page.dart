@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onFabPressed,
-        tooltip: 'Increment',
+        tooltip: Localized.string('Animations'),
         child: Text('🎉'),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

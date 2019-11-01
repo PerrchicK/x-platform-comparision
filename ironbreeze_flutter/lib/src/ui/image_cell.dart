@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ironbreeze/src/bl/models/image_data.dart';
-import 'package:ironbreeze/src/ui/image_viewer.dart';
 import 'package:ironbreeze/src/util/ui_factory.dart';
 import 'package:ironbreeze/src/util/utils.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -40,7 +39,8 @@ class _ImageCellState extends State<ImageCell> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ImageViewer(imageUrl: widget.data.imageUrl),
+              builder: (context) => Extend(widget.data)
+                  .imageViewer(), // ImageViewer(imageUrl: widget.data.imageUrl),
             ),
           );
         },

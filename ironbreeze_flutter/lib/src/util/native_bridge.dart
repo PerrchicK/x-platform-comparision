@@ -18,6 +18,8 @@ class NativeBridge {
   static const String SUCCESS_RESULT = "1";
   static const String FAILURE_RESULT = "0";
 
+  static DataManager get dataManager => DataManager();
+
   static bool _didNotifyFlutterPresented;
 
   static Future<dynamic> init() async {
@@ -107,7 +109,7 @@ class NativeBridge {
           result = NativeBridge.SUCCESS_RESULT;
           break;
         case 'application_entered_background':
-          DataManager.shared.lastTimeInForeground = Utils.now(false);
+          dataManager.lastTimeInForeground = Utils.now(false);
           LocalBroadcast.notifyEvent(
               AppObserver.Key_ON_APPLICATION_ENTERED_BACKGROUND);
           result = NativeBridge.SUCCESS_RESULT;
@@ -146,8 +148,8 @@ class NativeBridge {
     LocationHelper.shared.refreshPermissionsAuthorization();
 
     String result;
-    if (!DataManager.shared.didNotifyFlutterReady) {
-      DataManager.shared.didNotifyFlutterReady = true;
+    if (!dataManager.didNotifyFlutterReady) {
+      dataManager.didNotifyFlutterReady = true;
 
       result = await invokeNativeMethod('on_flutter_ready');
     } else {

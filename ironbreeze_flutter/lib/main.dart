@@ -14,7 +14,7 @@ Future main() async {
         "Crash details: ${details.exception}\n\nhere: ${details.stack}");
   };
 
-  await DataManager.shared.init();
+  await DataManager().init();
 
   Utils.init();
 
